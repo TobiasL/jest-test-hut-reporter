@@ -6,6 +6,7 @@ const readFileCode = async (files) => {
 
     return {
       ...file,
+      path: file.path.replace(process.cwd(), '.'),
       code: content.toString(),
     }
   })
