@@ -1,43 +1,13 @@
-const path = require('path')
 const axios = require('axios')
-const { getVersion } = require('jest')
 
 const readFileCode = require('./readFileCode')
+const mapCompleteResult = require('./mapCompleteResult')
 
-const packagePath = path.resolve(__dirname, '..', 'package.json')
-const { version } = require(packagePath)
-
-const jestVersion = getVersion()
-const TEST_INGESTER_URL = 'http://localhost:4000/api/tests'
-
-const mapCompleteResult = (results, apiKey) => {
-  const files = results.testResults.map((testResult) => {
-    const testNames = testResult.testResults.map((test) => test.fullName)
-    const testLines = testResult.testResults.map((test) => test.location?.line || null)
-
-    return {
-      path: testResult.testFilePath,
-      testNames,
-      testLines,
-    }
-  })
-
-
-  return {
-    startTime: new Date(results.startTime),
-    endTime: new Date(),
-    files,
-    apiKey,
-    nodeVersion: process.version,
-    reporterVersion: version,
-    jestVersion,
-  }
-}
+const TEST_INGESTER_URL = process.env.TEST_INGESTER_URL || 'http://localhost:4000/api/tests'
 
 const sendToTestIngester = async (result) => {
   const withCode = await readFileCode(result.files)
 
-  // TODO: Create a ref ID here?
   const payloadToSend = {
     ...result,
     files: withCode,
