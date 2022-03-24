@@ -4,6 +4,8 @@ const TestHutReporter = require('../index')
 
 jest.mock('axios')
 
+beforeEach(jest.clearAllMocks)
+
 test('No api key', async () => {
   const reporter = new TestHutReporter({})
   await reporter.onRunComplete({})
@@ -12,7 +14,7 @@ test('No api key', async () => {
 })
 
 test('With failed tests', async () => {
-  process.env = Object.assign(process.env, { TEST_HUT_KEY: 'API_KEY' })
+  process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
   await reporter.onRunComplete({}, {numFailedTests:1, testResults: []})
 
@@ -20,7 +22,7 @@ test('With failed tests', async () => {
 })
 
 test('Successful test run', async () => {
-  process.env = Object.assign(process.env, { TEST_HUT_KEY: 'API_KEY' })
+  process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
   await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
 
@@ -35,7 +37,7 @@ test('Unauthenticated when sending report', async () => {
     throw error
   })
 
-  process.env = Object.assign(process.env, { TEST_HUT_KEY: 'API_KEY' })
+  process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
   await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
 
@@ -47,9 +49,19 @@ test('Connection error when sending report', async () => {
     throw new Error('Connection error')
   })
 
-  process.env = Object.assign(process.env, { TEST_HUT_KEY: 'API_KEY' })
+  process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
   await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
 
   expect(axios.post).toHaveBeenCalled()
+})
+
+test('Change the URL to send test run with TEST_INGESTER_URL', async () => {
+  process.env.TEST_HUT_KEY = 'API_KEY'
+  process.env.TEST_INGESTER_URL = 'http://test-url/api/tests'
+
+  const reporter = new TestHutReporter({})
+  await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
+
+  expect(axios.post).toHaveBeenCalledWith('http://test-url/api/tests', expect.any(Object))
 })

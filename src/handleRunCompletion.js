@@ -1,20 +1,22 @@
 const axios = require('axios')
 
-const readFileCode = require('./readFileCode')
 const mapCompleteResult = require('./mapCompleteResult')
 
-const TEST_INGESTER_URL = process.env.TEST_INGESTER_URL || 'http://localhost:4000/api/tests'
-
 const sendToTestIngester = async (result) => {
-  const withCode = await readFileCode(result.files)
+  const filesWithUpdatedPaths = result.files.map((file) => ({
+    ...file,
+    path: file.path.replace(process.cwd(), '.'),
+  }))
 
   const payloadToSend = {
     ...result,
-    files: withCode,
+    files: filesWithUpdatedPaths,
   }
 
+  const ingesterUrl = process.env.TEST_INGESTER_URL || 'http://localhost:4000/api/tests'
+
   try {
-    await axios.post(TEST_INGESTER_URL, payloadToSend)
+    await axios.post(ingesterUrl, payloadToSend)
   } catch (error) {
     const isUnauthenticated = error?.response?.status === 401
 
