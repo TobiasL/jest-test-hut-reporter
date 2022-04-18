@@ -1,9 +1,5 @@
-const path = require('path')
-const { getVersion } = require('jest')
-
-const packagePath = path.resolve(__dirname, '..', 'package.json')
-const { version } = require(packagePath)
-const jestVersion = getVersion()
+const getJestVersions = require('./getJestVersions')
+const getGitSHA = require('./getGitSHA')
 
 const mapCompleteResult = (results, apiKey) => {
   const files = results.testResults.map((testResult) => {
@@ -18,13 +14,13 @@ const mapCompleteResult = (results, apiKey) => {
   })
 
   return {
+    ...getJestVersions(),
+    gitSHA: getGitSHA(),
     startTime: new Date(results.startTime),
     endTime: new Date(),
     files,
     apiKey,
     nodeVersion: process.version,
-    reporterVersion: version,
-    jestVersion,
   }
 }
 

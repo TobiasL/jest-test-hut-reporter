@@ -7,7 +7,11 @@ jest.mock('axios')
 // TODO: Fix the mocking of process.cwd().
 
 test('assert the payload format', async () => {
-  process.env = Object.assign(process.env, { TEST_HUT_KEY: 'API_KEY' })
+  process.env = Object.assign(process.env, {
+    TEST_HUT_KEY: 'API_KEY',
+    GITHUB_SHA: '4bb30ac6f1ead3b774fe2bd0fab0fc3d2a385803'
+  })
+
   const reporter = new TestHutReporter({})
   await reporter.onRunComplete(null, mathTestsResult)
 
@@ -29,7 +33,8 @@ test('assert the payload format', async () => {
       testNames: ["subtraction test 1", "subtraction test 2"],
     }],
     jestVersion: "27.5.0",
-    nodeVersion: "v17.8.0",
+    nodeVersion: expect.any(String),
     reporterVersion: "0.0.2",
+    gitSHA: "4bb30ac6f1ead3b774fe2bd0fab0fc3d2a385803"
   })
 })
