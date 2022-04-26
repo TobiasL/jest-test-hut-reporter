@@ -2,17 +2,7 @@ const axios = require('axios')
 
 const mapCompleteResult = require('./mapCompleteResult')
 
-const sendToTestIngester = async (result) => {
-  const filesWithUpdatedPaths = result.files.map((file) => ({
-    ...file,
-    path: file.path.replace(process.cwd(), '.'),
-  }))
-
-  const payloadToSend = {
-    ...result,
-    files: filesWithUpdatedPaths,
-  }
-
+const sendToTestIngester = async (payloadToSend) => {
   const ingesterUrl = process.env.TEST_INGESTER_URL || 'http://localhost:4000/api/tests'
 
   try {
@@ -28,8 +18,8 @@ const sendToTestIngester = async (result) => {
   }
 }
 
-const handleRunCompletion = async (results, apiKey) => {
-  const completeResult = mapCompleteResult(results, apiKey)
+const handleRunCompletion = async (results, apiKey, images) => {
+  const completeResult = mapCompleteResult(results, apiKey, images)
 
   await sendToTestIngester(completeResult)
 }

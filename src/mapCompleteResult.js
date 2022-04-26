@@ -1,13 +1,13 @@
 const getJestVersions = require('./getJestVersions')
 const getGitSHA = require('./getGitSHA')
 
-const mapCompleteResult = (results, apiKey) => {
+const mapCompleteResult = (results, apiKey, images) => {
   const files = results.testResults.map((testResult) => {
     const testNames = testResult.testResults.map((test) => test.fullName)
     const testLines = testResult.testResults.map((test) => test.location?.line || null)
 
     return {
-      path: testResult.testFilePath,
+      path: testResult.testFilePath.replace(process.cwd(), '.'),
       testNames,
       testLines,
     }
@@ -21,6 +21,7 @@ const mapCompleteResult = (results, apiKey) => {
     files,
     apiKey,
     nodeVersion: process.version,
+    images,
   }
 }
 
