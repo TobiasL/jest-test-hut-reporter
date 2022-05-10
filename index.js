@@ -13,7 +13,7 @@ const addImage = (imageBuffer) => {
   images.push({
     src: imageBuffer,
     path: testPath.replace(process.cwd(), '.'),
-    line
+    line,
   })
 }
 
@@ -27,9 +27,9 @@ class TestHutReporter {
     if (!this.apiKey) return
     if (results.numFailedTests !== 0) return
 
-    return await handleRunCompletion(results, this.apiKey, images)
+    await handleRunCompletion(results, this.apiKey, images)
   }
 }
 
-module.exports = TestHutReporter;
+module.exports = TestHutReporter
 module.exports.addImage = addImage

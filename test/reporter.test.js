@@ -16,7 +16,7 @@ test('No api key', async () => {
 test('With failed tests', async () => {
   process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
-  await reporter.onRunComplete({}, {numFailedTests:1, testResults: []})
+  await reporter.onRunComplete({}, { numFailedTests: 1, testResults: [] })
 
   expect(axios.post).not.toHaveBeenCalled()
 })
@@ -24,7 +24,7 @@ test('With failed tests', async () => {
 test('Successful test run', async () => {
   process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
-  await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
+  await reporter.onRunComplete({}, { numFailedTests: 0, testResults: [] })
 
   expect(axios.post).toHaveBeenCalled()
 })
@@ -39,7 +39,7 @@ test('Unauthenticated when sending report', async () => {
 
   process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
-  await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
+  await reporter.onRunComplete({}, { numFailedTests: 0, testResults: [] })
 
   expect(axios.post).toHaveBeenCalled()
 })
@@ -51,7 +51,7 @@ test('Connection error when sending report', async () => {
 
   process.env.TEST_HUT_KEY = 'API_KEY'
   const reporter = new TestHutReporter({})
-  await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
+  await reporter.onRunComplete({}, { numFailedTests: 0, testResults: [] })
 
   expect(axios.post).toHaveBeenCalled()
 })
@@ -61,7 +61,7 @@ test('Change the URL to send test run with TEST_INGESTER_URL', async () => {
   process.env.TEST_INGESTER_URL = 'http://test-url/api/tests'
 
   const reporter = new TestHutReporter({})
-  await reporter.onRunComplete({}, {numFailedTests:0, testResults: []})
+  await reporter.onRunComplete({}, { numFailedTests: 0, testResults: [] })
 
   expect(axios.post).toHaveBeenCalledWith('http://test-url/api/tests', expect.any(Object))
 })

@@ -11,11 +11,15 @@ const sendToTestIngester = async (payloadToSend) => {
     const isUnauthenticated = error?.response?.status === 401
 
     if (isUnauthenticated) {
+      // eslint-disable-next-line no-console
       return console.error('API KEY is missing or has been disabled for the project.')
     }
 
+    // eslint-disable-next-line no-console
     return console.error(`Error when sending the test report to Test Hut, error: ${error?.code}`)
   }
+
+  return null
 }
 
 const handleRunCompletion = async (results, apiKey, images) => {

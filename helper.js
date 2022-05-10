@@ -1,5 +1,6 @@
 const getJestGlobalData = () => {
-  let testPath, testName
+  let testPath
+  let testName
 
   [...Object.getOwnPropertySymbols(global)].forEach((key) => {
     if (global[key].state && global[key].matchers) {
@@ -21,8 +22,8 @@ const getCalledLine = () => {
 
   return {
     file: match[1],
-    line: parseInt(match[2], 10)
-  };
+    line: parseInt(match[2], 10),
+  }
 }
 
 module.exports = { getJestGlobalData, getCalledLine }
