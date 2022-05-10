@@ -1,7 +1,7 @@
 const handleRunCompletion = require('./src/handleRunCompletion')
 const { getJestGlobalData, getCalledLine } = require('./helper')
 
-const images = []
+let images = []
 
 // TODO: Make sure that it is a PNG?
 // TODO: Get Buffer from something like Puppeteer page.screenshot...
@@ -21,6 +21,8 @@ const addImage = (imageBuffer) => {
 class TestHutReporter {
   constructor(globalConfig, options) {
     this.apiKey = process.env.TEST_HUT_KEY || options?.apiKey
+
+    images = []
   }
 
   async onRunComplete(contexts, results) {

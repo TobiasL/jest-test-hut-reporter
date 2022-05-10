@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { uniq, uniqBy } = require('lodash')
 
 const mapCompleteResult = require('./mapCompleteResult')
 
@@ -22,10 +23,36 @@ const sendToTestIngester = async (payloadToSend) => {
   return null
 }
 
+const hasDuplicateTests = (result) => {
+  const testNames = result.files.map((file) => file.testNames).flat()
+  const uniqueTestNames = uniq(testNames)
+
+  return uniqueTestNames.length !== testNames.length
+}
+
+const hasDuplicateImages = (result) => {
+  const uniqueImages = uniqBy(result.images, 'src')
+
+  return uniqueImages.length !== result.images.length
+}
+
 const handleRunCompletion = async (results, apiKey, images) => {
   const completeResult = mapCompleteResult(results, apiKey, images)
 
-  await sendToTestIngester(completeResult)
+  const existDuplicateImages = hasDuplicateImages(completeResult)
+  const existDuplicateTests = hasDuplicateTests(completeResult)
+
+  if (existDuplicateImages) {
+    // eslint-disable-next-line no-console
+    return console.error('Duplicate images have been added through the "addImage" function.')
+  }
+
+  if (existDuplicateTests) {
+    // eslint-disable-next-line no-console
+    return console.error('Duplicate test names.')
+  }
+
+  return sendToTestIngester(completeResult)
 }
 
 module.exports = handleRunCompletion

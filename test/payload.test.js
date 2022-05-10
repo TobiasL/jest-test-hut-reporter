@@ -3,9 +3,12 @@ const fs = require('fs')
 
 const TestHutReporter = require('../index')
 const mathTestsResult = require('./jest-results/mathResult.json')
+const duplicateTestsResult = require('./jest-results/duplicateTestsResult.json')
 
 jest.mock('axios')
 // TODO: Fix the mocking of process.cwd().
+
+afterEach(() => jest.clearAllMocks())
 
 const content = fs.readFileSync('./test/example-image.png', { encoding: 'base64' })
 
@@ -16,10 +19,11 @@ test('assert the payload format', async () => {
   })
 
   const reporter = new TestHutReporter({})
-  await reporter.onRunComplete(null, mathTestsResult)
 
   // The line number and filename is important to assert in the test.
   TestHutReporter.addImage(content)
+
+  await reporter.onRunComplete(null, mathTestsResult)
 
   expect(axios.post).toHaveBeenCalledWith('http://localhost:4000/api/tests', {
     apiKey: 'API_KEY',
@@ -45,7 +49,36 @@ test('assert the payload format', async () => {
     images: [{
       src: content,
       path: './test/payload.test.js',
-      line: 22,
+      line: 24,
     }],
   })
+})
+
+test('dont\'t send the payload if there are duplicate images', async () => {
+  process.env = Object.assign(process.env, {
+    TEST_HUT_KEY: 'API_KEY',
+    GITHUB_SHA: '4bb30ac6f1ead3b774fe2bd0fab0fc3d2a385803',
+  })
+
+  const reporter = new TestHutReporter({})
+
+  // The line number and filename is important to assert in the test.
+  TestHutReporter.addImage(content)
+  TestHutReporter.addImage(content)
+
+  await reporter.onRunComplete(null, mathTestsResult)
+
+  expect(axios.post).not.toHaveBeenCalled()
+})
+
+test('dont\'t send the payload if there are duplicate tests', async () => {
+  process.env = Object.assign(process.env, {
+    TEST_HUT_KEY: 'API_KEY',
+    GITHUB_SHA: '4bb30ac6f1ead3b774fe2bd0fab0fc3d2a385803',
+  })
+
+  const reporter = new TestHutReporter({})
+  await reporter.onRunComplete(null, duplicateTestsResult)
+
+  expect(axios.post).not.toHaveBeenCalled()
 })
