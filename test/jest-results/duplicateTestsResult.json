@@ -52,7 +52,7 @@
         "unmatched": 0,
         "updated": 0
       },
-      "testFilePath": "/Users/tobiaslindstrom/projects/jest-test-hut-reporter/test/multiplication.test.js",
+      "testFilePath": "./test/multiplication.test.js",
       "testResults": [
         {
           "ancestorTitles": [],
@@ -110,7 +110,7 @@
         "unmatched": 0,
         "updated": 0
       },
-      "testFilePath": "/Users/tobiaslindstrom/projects/jest-test-hut-reporter/test/addition.test.js",
+      "testFilePath": "./test/addition.test.js",
       "testResults": [
         {
           "ancestorTitles": [],
@@ -168,7 +168,7 @@
         "unmatched": 0,
         "updated": 0
       },
-      "testFilePath": "/Users/tobiaslindstrom/projects/jest-test-hut-reporter/test/subtraction.test.js",
+      "testFilePath": "./test/subtraction.test.js",
       "testResults": [
         {
           "ancestorTitles": [],
