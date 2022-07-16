@@ -37,7 +37,7 @@ const hasDuplicateImages = (result) => {
 }
 
 const handleRunCompletion = async (results, apiKey, images) => {
-  const completeResult = mapCompleteResult(results, apiKey, images)
+  const completeResult = await mapCompleteResult(results, apiKey, images)
 
   const existDuplicateImages = hasDuplicateImages(completeResult)
   const existDuplicateTests = hasDuplicateTests(completeResult)

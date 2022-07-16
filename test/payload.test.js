@@ -31,14 +31,17 @@ test('assert the payload format', async () => {
     endTime: expect.any(Date),
     files: [{
       path: './test/multiplication.test.js',
+      code: null,
       testLines: [1, 7],
       testNames: ['multiplication test 1', 'multiplication test 2'],
     }, {
       path: './test/addition.test.js',
+      code: null,
       testLines: [1, 7],
       testNames: ['addition test 1', 'addition test 2'],
     }, {
       path: './test/subtraction.test.js',
+      code: null,
       testLines: [1, 7],
       testNames: ['subtraction test 1', 'subtraction test 2'],
     }],
