@@ -21,7 +21,7 @@ test('assert the payload format', async () => {
   const reporter = new TestHutReporter({})
 
   // The line number and filename is important to assert in the test.
-  TestHutReporter.addImage(content)
+  await TestHutReporter.addImage(content)
 
   await reporter.onRunComplete(null, mathTestsResult)
 
@@ -66,8 +66,8 @@ test('dont\'t send the payload if there are duplicate images', async () => {
   const reporter = new TestHutReporter({})
 
   // The line number and filename is important to assert in the test.
-  TestHutReporter.addImage(content)
-  TestHutReporter.addImage(content)
+  await TestHutReporter.addImage(content)
+  await TestHutReporter.addImage(content)
 
   await reporter.onRunComplete(null, mathTestsResult)
 

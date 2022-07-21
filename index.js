@@ -1,10 +1,9 @@
 const isValidImage = require('./src/isValidImage')
 const handleRunCompletion = require('./src/handleRunCompletion')
+const { saveImage, getImageCollection } = require('./src/collectImages')
 const { getJestGlobalData, getCalledLine } = require('./helper')
 
-let images = []
-
-const addImage = (imageBuffer) => {
+const addImage = async (imageBuffer) => {
   const validImage = isValidImage(imageBuffer)
 
   if (!validImage) {
@@ -15,7 +14,7 @@ const addImage = (imageBuffer) => {
   const { testPath } = getJestGlobalData()
   const { line } = getCalledLine()
 
-  return images.push({
+  return saveImage({
     src: imageBuffer,
     path: testPath.replace(process.cwd(), '.'),
     line,
@@ -26,13 +25,13 @@ const addImage = (imageBuffer) => {
 class TestHutReporter {
   constructor(globalConfig, options) {
     this.apiKey = process.env.TEST_HUT_KEY || options?.apiKey
-
-    images = []
   }
 
   async onRunComplete(contexts, results) {
     if (!this.apiKey) return
     if (results.numFailedTests !== 0) return
+
+    const images = await getImageCollection()
 
     await handleRunCompletion(results, this.apiKey, images)
   }
