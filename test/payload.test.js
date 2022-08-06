@@ -25,7 +25,7 @@ test('assert the payload format', async () => {
 
   await reporter.onRunComplete(null, mathTestsResult)
 
-  expect(axios.post).toHaveBeenCalledWith('http://localhost:4000/api/tests', {
+  expect(axios.post).toHaveBeenCalledWith('https://test-hut.tobiaslindstrom.se/api/tests', {
     apiKey: 'API_KEY',
     startTime: expect.any(Date),
     endTime: expect.any(Date),

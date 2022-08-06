@@ -23,17 +23,17 @@ const addImage = async (imageBuffer) => {
 }
 
 class TestHutReporter {
-  constructor(globalConfig, options) {
-    this.apiKey = process.env.TEST_HUT_KEY || options?.apiKey
-  }
-
+  // eslint-disable-next-line class-methods-use-this
   async onRunComplete(contexts, results) {
-    if (!this.apiKey) return
+    const apiKey = process.env.TEST_HUT_KEY
+    const ingesterUrl = process.env.TEST_INGESTER_URL || 'https://test-hut.tobiaslindstrom.se/api/tests'
+
+    if (!apiKey) return
     if (results.numFailedTests !== 0) return
 
     const images = await getImageCollection()
 
-    await handleRunCompletion(results, this.apiKey, images)
+    await handleRunCompletion(results, apiKey, ingesterUrl, images)
   }
 }
 

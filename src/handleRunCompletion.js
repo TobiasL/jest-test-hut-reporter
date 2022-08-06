@@ -3,9 +3,7 @@ const { uniq, uniqBy } = require('lodash')
 
 const mapCompleteResult = require('./mapCompleteResult')
 
-const sendToTestIngester = async (payloadToSend) => {
-  const ingesterUrl = process.env.TEST_INGESTER_URL || 'http://localhost:4000/api/tests'
-
+const sendToTestIngester = async (ingesterUrl, payloadToSend) => {
   try {
     await axios.post(ingesterUrl, payloadToSend)
   } catch (error) {
@@ -36,7 +34,7 @@ const hasDuplicateImages = (result) => {
   return uniqueImages.length !== result.images.length
 }
 
-const handleRunCompletion = async (results, apiKey, images) => {
+const handleRunCompletion = async (results, apiKey, ingesterUrl, images) => {
   const completeResult = await mapCompleteResult(results, apiKey, images)
 
   const existDuplicateImages = hasDuplicateImages(completeResult)
@@ -52,7 +50,7 @@ const handleRunCompletion = async (results, apiKey, images) => {
     return console.error('Duplicate test names.')
   }
 
-  return sendToTestIngester(completeResult)
+  return sendToTestIngester(ingesterUrl, completeResult)
 }
 
 module.exports = handleRunCompletion
