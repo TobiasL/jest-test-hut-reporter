@@ -38,6 +38,10 @@ it('Test', async () => {
 })
 ```
 
+### Jest --testLocationInResults
+
+Run Jest with the argument `--testLocationInResults` to get line numbers for the test cases.
+
 ## Environment variables
 
 ### Required
