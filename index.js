@@ -1,7 +1,8 @@
 const isValidImage = require('./src/isValidImage')
 const handleRunCompletion = require('./src/handleRunCompletion')
 const { saveImage, getImageCollection } = require('./src/collectImages')
-const { getJestGlobalData, getCalledLine } = require('./helper')
+const getJestGlobalData = require('./src/getJestGlobalData')
+const getCalledLine = require('./src/getCalledLine')
 
 const addImage = async (imageBuffer) => {
   const validImage = isValidImage(imageBuffer)
@@ -21,7 +22,6 @@ const addImage = async (imageBuffer) => {
   })
 }
 
-// TODO: Warn if the  --testLocationInResults is not provided.
 class TestHutReporter {
   constructor(globalConfig, options) {
     this.apiKey = process.env.TEST_HUT_KEY || options?.apiKey
