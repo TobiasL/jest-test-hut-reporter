@@ -1,16 +1,49 @@
 # Jest Test Hut reporter
 
-## About Test Hut
+*Jest Reporter for uploading test runs to Test Hut.*
 
-SaaS to discuss your product via tests...
+
+*https://test-hut.tobiaslindstrom.se/*
+
+## API
+
+### Installation and Jest configuration
+
+Install:
+
+`npm install --save-dev jest-test-hut-reporter`
+
+Configuration in `package.json`:
+
+```json
+{
+  "jest": {
+    "reporters": ["default", "jest-test-hut-reporter"]
+  }
+}
+```
+
+### Add image to be viewable in Test Hut
+
+Use the function `addImage` to add images to be viewable in Test Hut.
+It will automatically be connected to the file and line number the function is run at.
+
+```javascript
+const { addImage } = require('jest-test-hut-reporter')
+
+it('Test', async () => {
+  const base64Image = await screenshotApp()
+
+  await addImage(base64Image)
+})
+```
 
 ## Environment variables
 
-### TEST_HUT_KEY (required)
+### Required
 
-The API key that is generated for your project in Test Hut.
+* `TEST_HUT_KEY` API key for the project shown in Test Hut.
 
-### TEST_INGESTER_URL (optional)
+### Optional
 
-Used to override the URL to send the test results to.
-Can be used to get through a proxy for example.
+* `TEST_INGESTER_URL` Used to override the URL to send the test runs to.
