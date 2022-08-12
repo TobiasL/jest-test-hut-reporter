@@ -1,7 +1,8 @@
 const axios = require('axios')
 const fs = require('fs')
+// eslint-disable-next-line import/no-unresolved
+const TestHutReporter = require('jest-test-hut-reporter')
 
-const TestHutReporter = require('../index')
 const mathTestsResult = require('./jest-results/mathResult.json')
 const duplicateTestsResult = require('./jest-results/duplicateTestsResult.json')
 
@@ -52,7 +53,7 @@ test('assert the payload format', async () => {
     images: [{
       src: content,
       path: './test/payload.test.js',
-      line: 24,
+      line: 25,
     }],
   })
 })

@@ -1,5 +1,5 @@
-const isValidImage = require('./src/isValidImage')
-const handleRunCompletion = require('./src/handleRunCompletion')
+const isValidImage = require('./isValidImage')
+const handleRunCompletion = require('./handleRunCompletion')
 const { getJestGlobalData, getCalledLine } = require('./helper')
 
 let images = []
