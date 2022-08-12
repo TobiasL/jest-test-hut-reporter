@@ -1,17 +1,39 @@
 {
   "name": "jest-test-hut-reporter",
   "version": "0.0.2",
-  "description": "",
-  "main": "index.js",
+  "description": "Jest Reporter for uploading test runs to Test Hut.",
+  "main": "./src/index.js",
+  "files": [
+    "src/**/*.js"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint ."
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobiasL/jest-test-hut-reporter.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Tobias Lindström",
+    "email": "me@tobiaslindstrom.se"
+  },
+  "engines": {
+    "node": ">=12.0"
+  },
+  "keywords": [
+    "jest",
+    "test hut",
+    "reporter"
+  ],
+  "bugs": {
+    "url": "https://github.com/TobiasL/jest-test-hut-reporter/issues"
+  },
+  "homepage": "https://github.com/TobiasL/jest-test-hut-reporter#readme",
   "dependencies": {
-    "axios": "0.25.0",
-    "lodash": "4.17.21"
+    "axios": "^0.27.2",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "8.15.0",

@@ -1,6 +1,6 @@
 const axios = require('axios')
-
-const TestHutReporter = require('../index')
+// eslint-disable-next-line import/no-unresolved
+const TestHutReporter = require('jest-test-hut-reporter')
 
 jest.mock('axios')
 
