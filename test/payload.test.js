@@ -48,7 +48,7 @@ test('assert the payload format', async () => {
     }],
     jestVersion: '27.5.0',
     nodeVersion: expect.any(String),
-    reporterVersion: '0.0.2',
+    reporterVersion: expect.any(String),
     gitSHA: '4bb30ac6f1ead3b774fe2bd0fab0fc3d2a385803',
     images: [{
       src: content,
