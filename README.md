@@ -1,7 +1,9 @@
 # Jest Test Hut reporter
 
-*Jest Reporter for uploading test runs to Test Hut.*
+[![Build Status](https://github.com/TobiasL/jest-test-hut-reporter/workflows/Test%20and%20lint/badge.svg)](https://github.com/TobiasL/jest-test-hut-reporter/actions)
+[![Available on NPM](https://img.shields.io/npm/v/jest-test-hut-reporter.svg)](https://npmjs.com/package/jest-test-hut-reporter)
 
+*Jest Reporter for uploading test runs to Test Hut.*
 
 *https://test-hut.tobiaslindstrom.se/*
 
