@@ -1,8 +1,8 @@
-const isValidImage = require('./src/isValidImage')
-const handleRunCompletion = require('./src/handleRunCompletion')
-const { saveImage, getImageCollection } = require('./src/collectImages')
-const getJestGlobalData = require('./src/getJestGlobalData')
-const getCalledLine = require('./src/getCalledLine')
+const isValidImage = require('./isValidImage')
+const handleRunCompletion = require('./handleRunCompletion')
+const { saveImage, getImageCollection } = require('./collectImages')
+const getJestGlobalData = require('./getJestGlobalData')
+const getCalledLine = require('./getCalledLine')
 
 const addImage = async (imageBuffer) => {
   const validImage = isValidImage(imageBuffer)
